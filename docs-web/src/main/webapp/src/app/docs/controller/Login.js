@@ -5,6 +5,8 @@
  */
 angular.module('docs').controller('Login', function(Restangular, $scope, $rootScope, $state, $stateParams, $dialog, User, $translate, $uibModal) {
   $scope.codeRequired = false;
+  $scope.showRegister = false;
+  $scope.registerUser = {};
 
   // Get the app configuration
   Restangular.one('app').get().then(function(data) {
@@ -43,6 +45,36 @@ angular.module('docs').controller('Login', function(Restangular, $scope, $rootSc
         // Login truly failed
         var title = $translate.instant('login.login_failed_title');
         var msg = $translate.instant('login.login_failed_message');
+        var btns = [{result: 'ok', label: $translate.instant('ok'), cssClass: 'btn-primary'}];
+        $dialog.messageBox(title, msg, btns);
+      }
+    });
+  };
+
+  // Show register form
+  $scope.showRegisterForm = function() {
+    $scope.showRegister = true;
+  };
+
+  // Show login form
+  $scope.showLoginForm = function() {
+    $scope.showRegister = false;
+  };
+
+  // Register
+  $scope.register = function() {
+    Restangular.one('user').post('register', $scope.registerUser).then(function() {
+      // Registration successful, show success message and switch to login
+      var title = $translate.instant('login.register_success_title');
+      var msg = $translate.instant('login.register_success_message');
+      var btns = [{result: 'ok', label: $translate.instant('ok'), cssClass: 'btn-primary'}];
+      $dialog.messageBox(title, msg, btns).then(function() {
+        $scope.showLoginForm();
+      });
+    }, function(data) {
+      if (data.data.type === 'AlreadyExistingUsername') {
+        var title = $translate.instant('login.register_failed_title');
+        var msg = $translate.instant('login.register_failed_message');
         var btns = [{result: 'ok', label: $translate.instant('ok'), cssClass: 'btn-primary'}];
         $dialog.messageBox(title, msg, btns);
       }

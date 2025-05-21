@@ -4,6 +4,23 @@
  * File modal view controller.
  */
 angular.module('docs').controller('FileModalView', function ($uibModalInstance, $scope, $state, $stateParams, $sce, Restangular, $transitions) {
+  // Initialize rotation
+  $scope.rotation = 0;
+  
+  /**
+   * Rotate the image to the left.
+   */
+  $scope.rotateLeft = function() {
+    $scope.rotation = ($scope.rotation - 90) % 360;
+  };
+  
+  /**
+   * Rotate the image to the right.
+   */
+  $scope.rotateRight = function() {
+    $scope.rotation = ($scope.rotation + 90) % 360;
+  };
+
   var setFile = function (files) {
     // Search current file
     _.each(files, function (value) {

@@ -1,0 +1,11 @@
+{
+  "login": {
+    "register": "注册",
+    "register_title": "创建账户",
+    "back_to_login": "返回登录",
+    "register_success_title": "注册成功",
+    "register_success_message": "您的账户已创建成功。现在您可以使用您的凭据登录。",
+    "register_failed_title": "注册失败",
+    "register_failed_message": "该用户名已被使用。请选择其他用户名。"
+  }
+} 

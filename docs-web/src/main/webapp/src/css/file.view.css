@@ -1,0 +1,48 @@
+.text-center img {
+  max-width: 100%;
+  max-height: 80vh;
+  transition: transform 0.3s ease;
+  transform-origin: center center;
+}
+
+.text-center img:hover {
+  cursor: move;
+}
+
+.btn-group .btn {
+  margin-left: 5px;
+}
+
+.btn-group .btn:first-child {
+  margin-left: 0;
+}
+
+.video-overlay {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  background: #000;
+  text-align: center;
+}
+
+.video-overlay .fa-play-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 64px;
+  color: #fff;
+  opacity: 0.8;
+}
+
+.video-overlay video {
+  max-width: 100%;
+  max-height: 80vh;
+}
+
+.pdf-viewer {
+  width: 100%;
+  height: 80vh;
+  border: none;
+} 

@@ -31,6 +31,12 @@
     <button type="button" class="btn btn-default" uib-tooltip="Show text content" tooltip-append-to-body="true" ng-click="openFileContent()">
       <span class="fas fa-eye"></span>
     </button>
+    <button type="button" class="btn btn-default" uib-tooltip="Rotate left" tooltip-append-to-body="true" ng-click="rotateLeft()" ng-if="canDisplayPreview()">
+      <span class="fas fa-undo"></span>
+    </button>
+    <button type="button" class="btn btn-default" uib-tooltip="Rotate right" tooltip-append-to-body="true" ng-click="rotateRight()" ng-if="canDisplayPreview()">
+      <span class="fas fa-redo"></span>
+    </button>
   </div>
 </div>
 
@@ -39,7 +45,8 @@
   <img ng-src="../api/file/{{ $stateParams.fileId }}/data?size=web"
        ng-init="error = false"
        img-error="error = true"
-       ng-show="!error && canDisplayPreview()" />
+       ng-show="!error && canDisplayPreview()"
+       ng-style="{ 'transform': 'rotate(' + rotation + 'deg)' }" />
 
   <!-- Media player -->
   <a href class="video-overlay" ng-if="!error && (file.mimetype.substring(0, 6) == 'video/' || file.mimetype.substring(0, 6) == 'audio/')"

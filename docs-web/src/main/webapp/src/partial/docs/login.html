@@ -31,58 +31,83 @@
       <div class="col-lg-offset-4 col-lg-4 col-xs-offset-1 col-xs-10">
         <img src="img/title.png" class="img-responsive" />
 
-        <form>
-          <div class="form-group">
-            <label class="sr-only" for="inputUsername">{{ 'login.username' | translate }}</label>
-            <input class="form-control" type="text" id="inputUsername" name="username"
-                   ng-attr-placeholder="{{ 'login.username' | translate }}" ng-model="user.username" />
-          </div>
-
-          <div class="form-group">
-            <label class="sr-only" for="inputPassword">{{ 'login.password' | translate }}</label>
-            <input class="form-control" type="password" id="inputPassword" name="password"
-                   ng-attr-placeholder="{{ 'login.password' | translate }}" ng-model="user.password" />
-          </div>
-
-          <span class="help-block" ng-if="codeRequired">
-            {{ 'login.validation_code_required' | translate }}
-            <span class="fas fa-question-circle" title="{{ 'login.validation_code_title' | translate }}"></span>
-          </span>
-          <div class="form-group" ng-if="codeRequired">
-            <label class="sr-only" for="inputCode">{{ 'login.validation_code' | translate }}</label>
-            <input class="form-control" type="text" id="inputCode" name="code"
-                   ng-attr-placeholder="{{ 'login.validation_code' | translate }}" ng-model="user.code" />
-          </div>
-
-          <div class="checkbox text-muted">
-            <label>
-              <input type="checkbox" ng-model="user.remember" name="remember" /> {{ 'login.remember_me' | translate }}
-            </label>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6">
-              <button type="submit" class="btn btn-primary" ng-click="login()">
-                <span class="fas fa-check"></span> {{ 'login.submit' | translate }}
-              </button>
-            </div>
-
-            <div class="col-md-6 text-right btn-password-lost">
-              <div class="well-sm">
-                <a href ng-click="openPasswordLost()">{{ 'login.password_lost_btn' | translate }}</a>
-              </div>
+        <form class="form-horizontal" name="loginForm" novalidate autocomplete="off">
+          <div class="form-group" ng-class="{ 'has-error': !loginForm.username.$valid && loginForm.$dirty, success: loginForm.username.$valid }">
+            <label class="col-sm-2 control-label" for="inputUsername">{{ 'login.username' | translate }}</label>
+            <div class="col-sm-10">
+              <input name="username" type="text" id="inputUsername" required class="form-control"
+                     ng-pattern="/^[a-zA-Z0-9_@.-]*$/"
+                     ng-minlength="3" ng-maxlength="50" ng-attr-placeholder="{{ 'login.username' | translate }}" ng-model="user.username"/>
             </div>
           </div>
 
-          <p class="text-center" ng-if="app.guest_login">&nbsp;</p>
+          <div class="form-group" ng-class="{ 'has-error': !loginForm.password.$valid && loginForm.$dirty, success: loginForm.password.$valid }">
+            <label class="col-sm-2 control-label" for="inputPassword">{{ 'login.password' | translate }}</label>
+            <div class="col-sm-10">
+              <input name="password" type="password" id="inputPassword" required class="form-control"
+                     ng-minlength="8" ng-maxlength="50" ng-attr-placeholder="{{ 'login.password' | translate }}" ng-model="user.password"/>
+            </div>
+          </div>
 
-          <button type="submit" class="btn btn-default btn-block" ng-if="app.guest_login" ng-click="loginAsGuest()">
-            <span class="fas fa-user"></span> {{ 'login.login_as_guest' | translate }}
-          </button>
+          <div class="form-group" ng-show="codeRequired">
+            <label class="col-sm-2 control-label" for="inputCode">{{ 'login.code' | translate }}</label>
+            <div class="col-sm-10">
+              <input name="code" type="text" id="inputCode" required class="form-control"
+                     ng-attr-placeholder="{{ 'login.code' | translate }}" ng-model="user.code"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-primary" ng-click="login()" ng-disabled="!loginForm.$valid">{{ 'login.login' | translate }}</button>
+              <button type="button" class="btn btn-default" ng-click="loginAsGuest()" ng-show="app.guest_login">{{ 'login.guest' | translate }}</button>
+              <button type="button" class="btn btn-link" ng-click="showRegisterForm()">{{ 'login.register' | translate }}</button>
+            </div>
+          </div>
         </form>
       </div>
     </div>
   </div>
 
   <div class="login-img-container col-sm-6 hidden-xs"></div>
+</div>
+
+<div class="login-container">
+  <div class="register-box" ng-show="showRegister">
+    <h1 translate="login.register_title"></h1>
+    
+    <form class="form-horizontal" name="registerForm" novalidate autocomplete="off">
+      <div class="form-group" ng-class="{ 'has-error': !registerForm.username.$valid && registerForm.$dirty, success: registerForm.username.$valid }">
+        <label class="col-sm-2 control-label" for="inputRegisterUsername">{{ 'login.username' | translate }}</label>
+        <div class="col-sm-10">
+          <input name="username" type="text" id="inputRegisterUsername" required class="form-control"
+                 ng-pattern="/^[a-zA-Z0-9_@.-]*$/"
+                 ng-minlength="3" ng-maxlength="50" ng-attr-placeholder="{{ 'login.username' | translate }}" ng-model="registerUser.username"/>
+        </div>
+      </div>
+
+      <div class="form-group" ng-class="{ 'has-error': !registerForm.email.$valid && registerForm.$dirty, success: registerForm.email.$valid }">
+        <label class="col-sm-2 control-label" for="inputEmail">{{ 'login.email' | translate }}</label>
+        <div class="col-sm-10">
+          <input name="email" type="email" id="inputEmail" required class="form-control"
+                 ng-minlength="1" ng-maxlength="100" ng-attr-placeholder="{{ 'login.email' | translate }}" ng-model="registerUser.email"/>
+        </div>
+      </div>
+
+      <div class="form-group" ng-class="{ 'has-error': !registerForm.password.$valid && registerForm.$dirty, success: registerForm.password.$valid }">
+        <label class="col-sm-2 control-label" for="inputRegisterPassword">{{ 'login.password' | translate }}</label>
+        <div class="col-sm-10">
+          <input name="password" type="password" id="inputRegisterPassword" required class="form-control"
+                 ng-minlength="8" ng-maxlength="50" ng-attr-placeholder="{{ 'login.password' | translate }}" ng-model="registerUser.password"/>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary" ng-click="register()" ng-disabled="!registerForm.$valid">{{ 'login.register' | translate }}</button>
+          <button type="button" class="btn btn-link" ng-click="showLoginForm()">{{ 'login.back_to_login' | translate }}</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>

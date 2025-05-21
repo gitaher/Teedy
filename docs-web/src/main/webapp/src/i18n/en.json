@@ -1,0 +1,11 @@
+{
+  "login": {
+    "register": "Register",
+    "register_title": "Create an Account",
+    "back_to_login": "Back to Login",
+    "register_success_title": "Registration Successful",
+    "register_success_message": "Your account has been created successfully. You can now login with your credentials.",
+    "register_failed_title": "Registration Failed",
+    "register_failed_message": "This username is already taken. Please choose another one."
+  }
+} 
